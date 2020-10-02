@@ -1,7 +1,10 @@
+import { getData } from './getData.js'
+import generateSubCatalog from './generateSubCatalog.js';
+
 export const catalog = () => {
+    const updateSubCatalog = generateSubCatalog();
     const btnBurger = document.querySelector('.btn-burger');
     const catalog = document.querySelector('.catalog');
-    const btnClose = document.querySelector('.btn-close');
     const subCatalog = document.querySelector('.subcatalog');
     const subCatalogHeader = document.querySelector('.subcatalog-header');
     const btnReturn = document.querySelector('.btn-return');
@@ -27,16 +30,25 @@ export const catalog = () => {
     }
     // закрываем меню
     
-    // отркываем сабменю (работа с объектом сабытия)
-    const opneSubMenu = e => {
+    // отркываем сабменю (работа с объектом события)
+    const handlerCatalog = e => {
       e.preventDefault();
-      const itemList = e.target.closest('.catalog-list__item');
+      const target = e.target;
+      const itemList = target.closest('.catalog-list__item');
       if (itemList) {
-          subCatalogHeader.innerHTML = itemList.innerHTML;
-        subCatalog.classList.add('subopen');
+          getData.subCatalog(target.textContent, (data) => {
+
+            updateSubCatalog(target.textContent, data)
+            subCatalog.classList.add('subopen');
+
+          })
+      };
+
+      if (e.target.closest('.btn-close')) {
+        closeMenu();
       }
     };
-    // отркываем сабменю (работа с объектом сабытия)
+    // отркываем сабменю (работа с объектом события)
     
     // закрываем сабменю
     const closeSubMenu = () => {
@@ -48,10 +60,13 @@ export const catalog = () => {
     
     // вызов функций
     btnBurger.addEventListener('click', openMenu);
-    btnClose.addEventListener('click', closeMenu);
     overlay.addEventListener('click', closeMenu);
-    catalog.addEventListener('click', opneSubMenu);
-    btnReturn.addEventListener('click', closeSubMenu);
+    catalog.addEventListener('click', handlerCatalog);
+    subCatalog.addEventListener('click', e => {
+      const btnReturn = e.target.closest('.btn-return');
+
+      if (btnBurger) closeSubMenu();
+    })
     // вызов функций
     
     
