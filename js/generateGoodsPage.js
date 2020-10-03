@@ -1,4 +1,6 @@
-import { getData } from './getData.js'
+import { getData } from './getData.js';
+
+const COUNTER = 6;
 
 const wishList = ['idd034', 'idd023', 'idd004', 'idd029', 'idd087'];
 
@@ -9,10 +11,48 @@ const generateGoodsPage = () => {
 
   const generateCards = (data) => {
     goodsList.textContent = '';
+    if (!data.length) {
+      const goods = document.querySelector('.goods');
+      goods.textContent = location.search  === '?wishlist' ?
+      'Список желаний пуст' :
+      'К сожалению по вашему запросу ничего не найдено';
+    }
 
     data.forEach(item => {
+      console.log(item);
+
+      const { name: itemName, count, price, description, id , img, } = item;
+
+
       goodsList.insertAdjacentHTML('afterbegin', `
-        <li>${item.name}</li>`)
+        <li class="goods-list__item">
+          <a class="goods-item__link" href="card.html#${id}">
+            <article class="goods-item">
+              <div class="goods-item__img">
+                <img src=${img[0]}
+                ${img[1] ? 
+                  `data-second-image=${img[1]}` :
+                  ''}>
+              </div>
+              ${count >= COUNTER ?
+                '<p class="goods-item__new">Новинка</p' :
+                ''}
+              ${!count ?
+                '<p class="goods-item__new">Нет в наличии</p'
+                : ''}
+              <h3 class="goods-item__header">${itemName}</h3>
+              <p class="goods-item__description">${description}</p>
+              <p class="goods-item__price">
+                <span class="goods-item__price-value">${price}</span>
+                <span class="goods-item__currency"> ₽</span>
+              </p>
+              ${count ?
+                '<button class="btn btn-add-card" aria-label="Добравить в корзину" data-idd="idd001"></button>' : ''}
+              
+            </article>
+          </a>
+        </li>
+      `)
     })
   }
 

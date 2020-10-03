@@ -8,8 +8,6 @@ export const catalog = () => {
     const subCatalog = document.querySelector('.subcatalog');
     const subCatalogHeader = document.querySelector('.subcatalog-header');
     const btnReturn = document.querySelector('.btn-return');
-    
-    
     const overlay = document.createElement('div');
     
     overlay.classList.add('overlay');
