@@ -61,7 +61,7 @@ const generateItemPage = () => {
     })
 
     btnGood.addEventListener('click', () => {
-      userData.cardList = id;
+      userData.cartList = id;
     });
 
     checkWishList()

@@ -18,10 +18,8 @@ const generateGoodsPage = () => {
     }
 
     data.forEach(item => {
-      console.log(item);
 
       const { name: itemName, count, price, description, id , img, } = item;
-
 
       goodsList.insertAdjacentHTML('afterbegin', `
         <li class="goods-list__item">
@@ -55,12 +53,14 @@ const generateGoodsPage = () => {
     })
 
     goodsList.addEventListener('click', e => {
+
       const btnAddCard = e.target.closest('.btn-add-card');
       if (btnAddCard) {
         e.preventDefault();
         userData.cartList = btnAddCard.dataset.idd;
         console.log(userData.cartList)
       }
+
     })
 
   }

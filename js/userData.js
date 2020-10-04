@@ -1,10 +1,8 @@
 import { getLocalStorage,  setLocalStorage} from './storage.js'
 
-
 const userData = {
   wishListData: getLocalStorage('wishList'),
   get wishList() {
-    console.log(this.wishListData);
     return this.wishListData;
   },
   set wishList(id) {
@@ -22,6 +20,7 @@ const userData = {
   get cartList() {
     return this.cartListData
   },
+
   set cartList(id) {
     let obj = this.cartListData.find(item => item.id === id);
     if (obj) {
@@ -34,7 +33,26 @@ const userData = {
       this.cartListData.push(obj);
     }
     setLocalStorage('cartList', this.cartList);
+  },
+
+  set changeCountCarList(itemCart) {
+    let obj = this.cartListData.find(item => item.id === itemCart.id);
+    obj.count = itemCart.count;
+
+    setLocalStorage('cartList', this.cartList);
+  },
+
+  set deleteItemCart(idd) {
+    let index = -1;
+    this.cartList.forEach((item, i) => {
+      if (item.id === idd) {
+        index = i;
+      }
+    });
+    this.cartList.splice(index, 1);
+    setLocalStorage('cartList', this.cartList);
   }
+
 };
 
 
