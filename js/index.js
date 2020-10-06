@@ -13,4 +13,3 @@ generateCatalog();
 generateGoodsPage();
 generateItemPage();
 generateCartPage();
-
